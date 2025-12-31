@@ -15,8 +15,6 @@ class CashierController extends Controller
 {
     public function index(): JsonResponse
     {
-        // Or strictly strictly authorize as Admin logic if no UserPolicy 
-        // Assuming simple role check via Gate/Middleware handled in route, but let's be safe
         if (request()->user()->role !== Role::ADMIN) {
             abort(403);
         }

@@ -25,8 +25,6 @@ class GoogleIdTokenVerifier
             ]);
         }
 
-        // Audience check is handled by verifyIdToken if client ID is set,
-        // but explicit check adds safety if client is reused.
         if ($payload['aud'] !== config('services.google.client_id')) {
              throw ValidationException::withMessages([
                 'id_token' => [trans('auth.failed')],

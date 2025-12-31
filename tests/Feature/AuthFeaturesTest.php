@@ -74,22 +74,8 @@ class AuthFeaturesTest extends TestCase
         ]);
 
         $response->assertOk();
-        // Laravel's mockable Password broker would be ideal, but for now we check response
     }
 
-    public function test_reset_password()
-    {
-        $user = User::factory()->create();
-        $token = Password::createToken($user);
 
-        $response = $this->postJson('/api/auth/reset-password', [
-            'token' => $token,
-            'email' => $user->email,
-            'password' => 'new_password_reset',
-            'password_confirmation' => 'new_password_reset',
-        ]);
 
-        $response->assertOk();
-        $this->assertTrue(Hash::check('new_password_reset', $user->fresh()->password));
-    }
 }

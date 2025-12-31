@@ -12,12 +12,15 @@ use Illuminate\Support\Str;
 
 class PasswordResetController extends Controller
 {
+
     public function sendResetLink(ForgotPasswordRequest $request): JsonResponse
     {
         $status = Password::sendResetLink($request->only('email'));
 
         return $status === Password::RESET_LINK_SENT
             ? response()->json(['status' => __($status)])
-            : response()->json(['email' => __($status)], 422); // Use 422 for validation-like errors
+            : response()->json(['email' => __($status)], 422);
     }
+
+
 }

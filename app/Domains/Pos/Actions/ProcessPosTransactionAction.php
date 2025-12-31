@@ -14,8 +14,6 @@ class ProcessPosTransactionAction
 {
     public function execute(array $items, int $paymentAmount, string $paymentMethod, User $cashier): PosTransaction
     {
-        // Distributed Lock (Redis) to prevent race conditions at the application level
-        // 'block(5)' waits up to 5 seconds for the lock.
         return \Illuminate\Support\Facades\Cache::lock('pos_transaction_processing', 10)->block(5, function () use ($items, $paymentAmount, $paymentMethod, $cashier) {
             return DB::transaction(function () use ($items, $paymentAmount, $paymentMethod, $cashier) {
                 if (empty($items)) {

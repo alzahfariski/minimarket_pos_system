@@ -16,8 +16,6 @@ class RedisFeaturesTest extends TestCase
 
     public function test_pos_transaction_succeeds_with_lock()
     {
-        // This test verifies that the Cache::lock() implementation doesn't break the transaction flow.
-        // Even with 'array' driver, lock() works (as a simple mutex).
         
         $cashier = User::factory()->create(['role' => 'cashier']);
         $product = Product::create([
@@ -62,9 +60,6 @@ class RedisFeaturesTest extends TestCase
         
         $this->assertTrue(Cache::has('product:scan:SCAN-001'));
         
-        // Manipulate DB to prove we are hitting cache (optional, or just verify cache key exist)
-        // For 'array' driver, persistence across requests in test might differ depending on setup,
-        // but Cache::has check is sufficient.
     }
 
     public function test_product_scan_not_found()

@@ -48,7 +48,8 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // Public Auth Routes (Forgot/Reset Password)
-Route::post('/auth/forgot-password', [\App\Domains\Auth\Controllers\PasswordResetController::class, 'sendResetLink']);
+Route::post('/auth/forgot-password', [\App\Domains\Auth\Controllers\PasswordResetController::class, 'sendResetLink'])->name('password.email');
+Route::get('/reset-password/{token}', fn () => response()->json(['message' => 'Reset password feature is disabled.']))->name('password.reset');
 
 Route::middleware(['auth:sanctum', 'can:admin-only'])
     ->get('/admin/ping', fn () => response()->json(['ok' => true]));
